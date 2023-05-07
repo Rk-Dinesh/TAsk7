@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Task 7</title>
+</head>
+
+<body>
+    <script>
+        // to create an object to XHR request
+        let xhr = new XMLHttpRequest();
+
+        // to set the request headers
+        xhr.open('GET', 'https://restcountries.com/v3.1/all', true);
+
+        // when the response received
+        xhr.onload = function () {
+            let response = JSON.parse(this.responseText);
+            console.log(response);
+            const asiaCountries = response.filter(country => country.region === "Asia");
+            console.log("Asia Countries:", asiaCountries);
+
+            // Get all countries with a population of less than 2 lakhs using the filter function
+            const lowPopCountries = response.filter(country => country.population < 200000);
+            console.log("Low Population Countries:", lowPopCountries);
+
+            // Print the name, capital, and flag details using the forEach function
+            response.forEach(country => {
+                console.log(`Name: ${country.name.common}, Capital: ${country.capital}, Flag: ${country.flags[0]}`);
+            });
+
+            // Print the total population of countries using the reduce function
+            const totalPopulation = response.reduce((acc, country) => acc + country.population, 0);
+            console.log("Total Population:", totalPopulation);
+
+            // Print the country which uses US Dollars as currency using the find function
+            const usDollarCountry = response.find(country => country.currencies.USD);
+            console.log("Country that uses US Dollars:", usDollarCountry);
+        }
+
+        // send the request
+        xhr.send();
+
+
+    </script>
+</body>
+
+</html>
